@@ -600,14 +600,14 @@ window.TRIP_DATA = {
           "query": "Kencho-mae Station Okinawa"
         },
         {
-          "lat": 26.397,
-          "lng": 127.744,
+          "lat": 26.4073436,
+          "lng": 127.7541159,
           "name": "요미탄 도자기 마을",
           "query": "Yachimun no Sato Yomitan"
         },
         {
-          "lat": 26.433,
-          "lng": 127.77,
+          "lat": 26.4458616,
+          "lng": 127.8071377,
           "name": "도카도카",
           "query": "Cafe Gallery Doka Doka Okinawa"
         },
@@ -1104,8 +1104,8 @@ window.TRIP_DATA = {
           "query": "Okinawa Churaumi Aquarium"
         },
         {
-          "lat": 26.708,
-          "lng": 127.874,
+          "lat": 26.702205,
+          "lng": 127.879659,
           "name": "카페 차하야부란",
           "query": "Cafe Cahaya Bulan Okinawa"
         },
