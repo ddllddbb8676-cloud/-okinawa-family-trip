@@ -131,4 +131,24 @@ for i,day in enumerate(DATA['days']):
     b+=text(1048,y+47,f'{i+1}일차 · {day["date"]}',32,COLORS[i])+text(1048,y+92,day['area'],32)
 b+=text(74,1420,'색상별 선은 방문 순서예요. 실제 도로 경로는 날짜별 구글 지도에서 확인하세요.',27,'#607e90')
 (ROOT/'maps/overview.svg').write_text(finish(b,'오키나와 7박 8일 전체 이동 경로','<clipPath id="overview">'+rect(60,235,925,1130,'white',26)+'</clipPath>'))
-print('Created 8 daily maps and overview')
+
+# A route-only overview is embedded as an object so the page can highlight one
+# day without downloading eight nearly-identical map images.
+used.clear();P=projection((127.57,26.04,128.35,26.91),(105,255,790,1060))
+b=rect(0,0,1000,1500,'#e8f7fd',0)+rect(22,22,956,1455,'#f9fdff',30,'#b9dfea',3)
+b+=flower(78,87,.55)+text(132,91,'전체 이동 경로',46)+text(134,139,'날짜를 누르면 그날의 길이 선명해져요',24,'#52768e')
+b+=rect(55,190,890,1190,'url(#sea)',25,'#82c5df',3)+geography(P,'interactive-overview')+compass(885,258)
+b+='<style>.overview-route{opacity:.9;transition:opacity .2s ease}.overview-route .route-halo{stroke-width:12}.overview-route .route-color{stroke-width:6}.overview-route .route-dot{opacity:.95}.overview-route.is-muted{opacity:.12}.overview-route.is-selected{opacity:1}.overview-route.is-selected .route-halo{stroke-width:25}.overview-route.is-selected .route-color{stroke-width:13}.overview-route.is-selected .route-dot{stroke-width:6}</style>'
+for i,day in enumerate(DATA['days']):
+    q=[P(p['lng'],p['lat']) for p in day['map']]
+    b+=f'<g class="overview-route" data-route="{i}">'+path(q,'white',12,extra='class="route-halo"')+path(q,COLORS[i],6,extra='class="route-color"')
+    for x,y in q:b+=circle(x,y,9,COLORS[i],'white',4).replace('/>',' class="route-dot"/>')
+    b+='</g>'
+for name,lng,lat,dx,dy in [('나하',127.679,26.214,-102,-8),('나고',127.977,26.591,22,40),('고우리섬',128.02,26.71,18,-24),('모토부·비세',127.8779,26.6943,-205,-28),('온나·만좌모',127.851,26.5048,-205,-8),('차탄',127.758,26.316,20,20),('오키나와 남부',127.7484,26.1414,24,26)]:
+    x,y=P(lng,lat);b+=circle(x,y,10,BLUE,'white',4)+text(x+dx,y+dy,name,34)
+b+=rect(115,1403,770,48,'#e5f3f8',22)+text(500,1437,'굵게 표시된 선이 선택한 날짜의 이동 방향이에요',23,'#496f84','middle')
+clips='<clipPath id="interactive-overview">'+rect(55,190,890,1190,'white',25)+'</clipPath>'
+defs='<linearGradient id="sea" x2="0" y2="1"><stop stop-color="#b9eaff"/><stop offset="1" stop-color="#86ceed"/></linearGradient><linearGradient id="land" x2="1" y2="1"><stop stop-color="#e4f1b1"/><stop offset=".5" stop-color="#c4dfa0"/><stop offset="1" stop-color="#a8d092"/></linearGradient>'+clips+''.join(f'<path id="{k}" d="{v}"/>' for k,v in used.items())
+svg=f'<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1500" viewBox="0 0 1000 1500" role="img"><title>날짜를 선택해 강조하는 오키나와 전체 이동 경로</title><defs>{defs}</defs>{b}</svg>'
+(ROOT/'maps/overview-interactive.svg').write_text(re.sub(r'-?\d+\.\d{3,}',lambda m:format(float(m.group()),'.2f').rstrip('0').rstrip('.'),svg))
+print('Created 8 daily maps, overview, and interactive overview')
