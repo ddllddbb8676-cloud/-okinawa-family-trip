@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#123c69">
+  <meta name="description" content="2026년 우리 가족 오키나와 7박 8일 여행 일정">
+  <title>우리 가족 오키나와 여행</title>
+  <style>
+    :root{--ink:#172033;--muted:#68758a;--line:#dbe4ee;--paper:#f5f8fb;--card:#fff;--blue:#123c69;--sea:#168aad;--sky:#e5f6fb;--coral:#ef8354;--green:#2d6a4f;--shadow:0 10px 30px rgba(25,54,86,.08)}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Segoe UI",sans-serif;line-height:1.55}button,a{font:inherit}.hero{color:#fff;background:linear-gradient(145deg,#0d355f,#087e9d);padding:calc(28px + env(safe-area-inset-top)) 20px 32px}.wrap{width:min(820px,100%);margin:auto}.eyebrow{font-size:13px;letter-spacing:.08em;opacity:.78}.hero h1{font-size:clamp(28px,8vw,44px);line-height:1.18;margin:9px 0 8px}.hero p{margin:0;opacity:.86}.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:24px}.fact{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:11px 13px}.fact small{display:block;opacity:.7}.fact b{display:block;margin-top:2px}.section{padding:22px 16px 0}.overview,.day,.check{background:var(--card);border-radius:20px;box-shadow:var(--shadow)}.overview{padding:18px}.flight{display:grid;gap:10px}.flight-row{display:flex;gap:11px;align-items:flex-start}.flight-row span{width:42px;color:var(--sea);font-weight:700}.flight-row strong{font-size:15px}.note{font-size:13px;color:var(--muted);margin-top:10px}.stay{margin-top:16px;padding:13px;border-radius:14px;background:var(--sky);color:var(--blue);font-weight:700}.nav-shell{position:sticky;top:0;z-index:10;background:rgba(245,248,251,.94);backdrop-filter:blur(12px);padding:12px 0 8px;border-bottom:1px solid var(--line)}.day-nav{display:flex;gap:7px;overflow-x:auto;padding:0 16px;scrollbar-width:none}.day-nav::-webkit-scrollbar{display:none}.day-nav a{flex:0 0 auto;text-decoration:none;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 13px;font-size:13px;font-weight:700}.days{display:grid;gap:16px;padding:16px}.day{overflow:hidden;scroll-margin-top:72px}.day-head{display:flex;justify-content:space-between;gap:14px;padding:17px 18px;background:linear-gradient(90deg,#f7fbfd,#fff)}.date{color:var(--blue);font-size:22px;font-weight:800}.date small{font-size:13px;font-weight:600;color:var(--muted)}.area{text-align:right}.area b{display:block}.area small{color:var(--muted)}.summary{margin:0;padding:0 18px 14px;color:var(--muted);font-size:14px}.timeline{list-style:none;margin:0;padding:2px 18px 8px}.timeline li{position:relative;display:grid;grid-template-columns:54px 1fr;gap:12px;padding:0 0 18px 17px}.timeline li:before{content:"";position:absolute;left:2px;top:8px;width:8px;height:8px;border-radius:50%;background:var(--sea);box-shadow:0 0 0 4px var(--sky)}.timeline li:not(:last-child):after{content:"";position:absolute;left:5px;top:21px;bottom:5px;width:2px;background:var(--line)}.time{color:var(--sea);font-size:13px;font-weight:800}.place b{display:block}.place small{color:var(--muted)}.caution{margin:0 18px 18px;padding:11px 13px;border-radius:12px;background:#fff4ed;color:#8d4529;font-size:13px}.badge{display:inline-flex;align-items:center;gap:6px;color:var(--green);font-size:12px;font-weight:700}.dot{width:7px;height:7px;border-radius:50%;background:currentColor}.check{padding:18px;margin:0 16px 28px}.check h2{font-size:20px;margin:0 0 12px}.check label{display:flex;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:14px}.check input{width:19px;height:19px;accent-color:var(--sea);flex:0 0 auto}.footer{padding:0 20px calc(30px + env(safe-area-inset-bottom));text-align:center;color:var(--muted);font-size:12px}.updated{display:inline-block;padding:7px 11px;border-radius:999px;background:#eaf0f5}@media(min-width:680px){.facts{grid-template-columns:repeat(4,1fr)}.days{grid-template-columns:repeat(2,1fr);align-items:start}.day:last-child{grid-column:1/-1}.timeline li{grid-template-columns:62px 1fr}.section{padding-left:16px;padding-right:16px}}
+  </style>
+</head>
+<body>
+  <header class="hero"><div class="wrap"><div class="eyebrow" id="dates"></div><h1 id="title"></h1><p id="subtitle"></p><div class="facts" id="facts"></div></div></header>
+  <main class="wrap">
+    <section class="section"><div class="overview"><div class="flight" id="flight"></div><div class="stay" id="stay"></div><div class="note" id="flight-note"></div></div></section>
+    <nav class="nav-shell" aria-label="날짜 바로가기"><div class="day-nav" id="day-nav"></div></nav>
+    <section class="days" id="days" aria-label="날짜별 일정"></section>
+    <section class="check"><h2>출발 전 확인</h2><div id="checklist"></div></section>
+  </main>
+  <footer class="footer"><span class="updated" id="updated"></span></footer>
+  <script src="itinerary-data.js"></script>
+  <script>
+    const d=window.TRIP_DATA;
+    const esc=s=>String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    document.querySelector('#dates').textContent=d.dates;
+    document.querySelector('#title').textContent=d.title;
+    document.querySelector('#subtitle').textContent=d.subtitle;
+    document.querySelector('#facts').innerHTML=[d.party,d.nights,...d.transport.map(x=>x.value)].map((v,i)=>`<div class="fact"><small>${['인원','기간','초반 이동','렌터카'][i]}</small><b>${esc(v)}</b></div>`).join('');
+    document.querySelector('#flight').innerHTML=`<div class="flight-row"><span>가는편</span><strong>${esc(d.flight.outbound)}</strong></div><div class="flight-row"><span>오는편</span><strong>${esc(d.flight.inbound)}</strong></div>`;
+    document.querySelector('#stay').textContent='숙박 · '+d.stays;
+    document.querySelector('#flight-note').textContent=d.flight.note;
+    document.querySelector('#day-nav').innerHTML=d.days.map((x,i)=>`<a href="#day-${i+1}">${esc(x.date)} ${esc(x.dow)}</a>`).join('');
+    document.querySelector('#days').innerHTML=d.days.map((x,i)=>`<article class="day" id="day-${i+1}"><header class="day-head"><div class="date">${esc(x.date)} <small>${esc(x.dow)}요일</small></div><div class="area"><b>${esc(x.area)}</b><small>${esc(x.stay)}</small></div></header><p class="summary"><span class="badge"><span class="dot"></span>${esc(x.mode)}</span><br>${esc(x.summary)}</p><ol class="timeline">${x.stops.map(s=>`<li><div class="time">${esc(s.time)}</div><div class="place"><b>${esc(s.name)}</b><small>${esc(s.note)}</small></div></li>`).join('')}</ol>${x.caution?`<p class="caution">${esc(x.caution)}</p>`:''}</article>`).join('');
+    document.querySelector('#checklist').innerHTML=d.checklist.map((x,i)=>`<label><input type="checkbox" data-check="${i}"><span>${esc(x)}</span></label>`).join('');
+    document.querySelector('#updated').textContent='일정 업데이트 · '+d.updatedAt;
+    const key='okinawa-family-trip-checks';
+    const saved=JSON.parse(localStorage.getItem(key)||'{}');
+    document.querySelectorAll('[data-check]').forEach(el=>{el.checked=!!saved[el.dataset.check];el.addEventListener('change',()=>{saved[el.dataset.check]=el.checked;localStorage.setItem(key,JSON.stringify(saved))})});
+  </script>
+</body>
+</html>
